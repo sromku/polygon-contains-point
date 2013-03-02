@@ -4,86 +4,96 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The 2D polygon with borders
+ * The 2D polygon. <br>
  * 
+ * @see {@link Builder}
  * @author Roman Kushnarenko (sromku@gmail.com)
  */
 public class Polygon
 {
-	private BoundingBox _boundingBox = null;
-	private List<Vector> _sides = new ArrayList<Vector>();
+	private final BoundingBox _boundingBox;
+	private final List<Line> _sides;
 
-	private Polygon(List<Vector> sides)
+	private Polygon(List<Line> sides, BoundingBox boundingBox)
 	{
 		_sides = sides;
+		_boundingBox = boundingBox;
 	}
 
+	/**
+	 * Get the builder of the polygon
+	 * 
+	 * @return The builder
+	 */
 	public static Builder Builder()
 	{
 		return new Builder();
 	}
 
 	/**
-	 * Builder of the surface with borders
+	 * Builder of the polygon
 	 * 
-	 * @author Roman Kushnarenko (sromku@gmail.com)</br> Created date: Mar 1, 2013
+	 * @author Roman Kushnarenko (sromku@gmail.com)
 	 */
 	public static class Builder
 	{
-		private List<Point> _points = new ArrayList<Point>();
+		private List<Point> _vertexes = new ArrayList<Point>();
+		private List<Line> _sides = new ArrayList<Line>();
 		private BoundingBox _boundingBox = null;
-		private List<Vector> _sides = new ArrayList<Vector>();
 
 		private boolean _firstPoint = true;
 		private boolean _isClosed = false;
 
 		/**
-		 * Add points by their order on the border
+		 * Add vertex points of the polygon.<br>
+		 * It is very important to add the vertexes by order, like you were drawing them one by one.
 		 * 
 		 * @param point
-		 * @return
+		 *            The vertex point
+		 * @return The builder
 		 */
-		public Builder addPoint(Point point)
+		public Builder addVertex(Point point)
 		{
 			if (_isClosed)
 			{
-				_points = new ArrayList<Point>();
+				// each hole we start with the new array of vertex points
+				_vertexes = new ArrayList<Point>();
 				_isClosed = false;
 			}
 
-			defineBoundingBox(point);
-			_points.add(point);
+			updateBoundingBox(point);
+			_vertexes.add(point);
 
-			// set Vectors
-			if (_points.size() > 1)
+			// add line (edge) to the polygon
+			if (_vertexes.size() > 1)
 			{
-				Vector Vector = new Vector(_points.get(_points.size() - 2), point);
-				_sides.add(Vector);
+				Line Line = new Line(_vertexes.get(_vertexes.size() - 2), point);
+				_sides.add(Line);
 			}
 
 			return this;
 		}
 
 		/**
-		 * This will create new vector from the last point to the beginning.
+		 * Close the polygon shape. This will create a new side (edge) from the <b>last</b> vertex point to the <b>first</b> vertex point.
 		 * 
-		 * @return
+		 * @return The builder
 		 */
 		public Builder close()
 		{
 			validate();
 
-			// add last Vector
-			_sides.add(new Vector(_points.get(_points.size() - 1), _points.get(0)));
+			// add last Line
+			_sides.add(new Line(_vertexes.get(_vertexes.size() - 1), _vertexes.get(0)));
 			_isClosed = true;
 
 			return this;
 		}
 
 		/**
-		 * Build the polygon shape
+		 * Build the instance of the polygon shape.
 		 * 
-		 * @return
+		 * @return The polygon
 		 */
 		public Polygon build()
 		{
@@ -92,16 +102,21 @@ public class Polygon
 			// in case you forgot to close
 			if (!_isClosed)
 			{
-				// add last Vector
-				_sides.add(new Vector(_points.get(_points.size() - 1), _points.get(0)));
+				// add last Line
+				_sides.add(new Line(_vertexes.get(_vertexes.size() - 1), _vertexes.get(0)));
 			}
-			Polygon polygon = new Polygon(_sides);
-			polygon.setBoundingBox(_boundingBox);
 
+			Polygon polygon = new Polygon(_sides, _boundingBox);
 			return polygon;
 		}
 
-		private void defineBoundingBox(Point point)
+		/**
+		 * Update bounding box with a new point.<br>
+		 * 
+		 * @param point
+		 *            New point
+		 */
+		private void updateBoundingBox(Point point)
 		{
 			if (_firstPoint)
 			{
@@ -137,7 +152,7 @@ public class Polygon
 
 		private void validate()
 		{
-			if (_points.size() < 3)
+			if (_vertexes.size() < 3)
 			{
 				throw new RuntimeException("Polygon must have at least 3 points");
 			}
@@ -145,18 +160,19 @@ public class Polygon
 	}
 
 	/**
-	 * Check if the the given point is inVector the polygon.<br>
+	 * Check if the the given point is inside of the polygon.<br>
 	 * 
 	 * @param point
-	 * @return <code>True</code> if the point is inVector the polygon, otherwise return <code>False</code>
+	 *            The point to check
+	 * @return <code>True</code> if the point is inside the polygon, otherwise return <code>False</code>
 	 */
 	public boolean contains(Point point)
 	{
 		if (inBoundingBox(point))
 		{
-			Vector ray = createRay(point);
+			Line ray = createRay(point);
 			int intersection = 0;
-			for (Vector side : _sides)
+			for (Line side : _sides)
 			{
 				if (intersect(ray, side))
 				{
@@ -166,7 +182,7 @@ public class Polygon
 			}
 
 			/*
-			 * If the number of intersections is odd, then the point is isInside the polygon
+			 * If the number of intersections is odd, then the point is inside the polygon
 			 */
 			if (intersection % 2 == 1)
 			{
@@ -176,19 +192,19 @@ public class Polygon
 		return false;
 	}
 
-	public List<Vector> getSides()
+	public List<Line> getSides()
 	{
 		return _sides;
 	}
 
 	/**
-	 * By given ray and one side of the polygon, this method will return <code>True</code> if both vectors intersect
+	 * By given ray and one side of the polygon, check if both lines intersect.
 	 * 
 	 * @param ray
 	 * @param side
-	 * @return
+	 * @return <code>True</code> if both lines intersect, otherwise return <code>False</code>
 	 */
-	private boolean intersect(Vector ray, Vector side)
+	private boolean intersect(Line ray, Line side)
 	{
 		Point intersectPoint = null;
 
@@ -209,14 +225,14 @@ public class Polygon
 		else if (ray.isVertical() && !side.isVertical())
 		{
 			float x = ray.getStart().x;
-			float y = side.getA() * x + side.getB(); // y = a2*x+b2
+			float y = side.getA() * x + side.getB();
 			intersectPoint = new Point(x, y);
 		}
 
 		else if (!ray.isVertical() && side.isVertical())
 		{
 			float x = side.getStart().x;
-			float y = ray.getA() * x + ray.getB(); // y = a2*x+b2
+			float y = ray.getA() * x + ray.getB();
 			intersectPoint = new Point(x, y);
 		}
 
@@ -237,31 +253,27 @@ public class Polygon
 	}
 
 	/**
-	 * Create ray
+	 * Create a ray. The ray will be created by given point and on point outside of the polygon.<br>
+	 * The outside point is calculated automatically.
 	 * 
 	 * @param point
 	 * @return
 	 */
-	private Vector createRay(Point point)
+	private Line createRay(Point point)
 	{
 		// create outside point
 		float epsilon = (_boundingBox.xMax - _boundingBox.xMin) / 100f;
 		Point outsidePoint = new Point(_boundingBox.xMin - epsilon, _boundingBox.yMin);
 
-		Vector vector = new Vector(outsidePoint, point);
+		Line vector = new Line(outsidePoint, point);
 		return vector;
-	}
-
-	private void setBoundingBox(BoundingBox boundingBox)
-	{
-		_boundingBox = boundingBox;
 	}
 
 	/**
 	 * Check if the given point is in bounding box
 	 * 
 	 * @param point
-	 * @return
+	 * @return <code>True</code> if the point in bounding box, otherwise return <code>False</code>
 	 */
 	private boolean inBoundingBox(Point point)
 	{

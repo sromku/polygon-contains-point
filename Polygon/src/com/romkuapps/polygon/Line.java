@@ -1,19 +1,19 @@
 package com.romkuapps.polygon;
 
 /**
- * Vector
+ * Line is defined by starting point and ending point on 2D dimension.<br>
  * 
  * @author Roman Kushnarenko (sromku@gmail.com)
  */
-public class Vector
+public class Line
 {
-	private Point _start;
-	private Point _end;
+	private final Point _start;
+	private final Point _end;
 	private float _a = Float.NaN;
 	private float _b = Float.NaN;
 	private boolean _vertical = false;
 
-	public Vector(Point start, Point end)
+	public Line(Point start, Point end)
 	{
 		_start = start;
 		_end = end;
@@ -31,10 +31,11 @@ public class Vector
 	}
 
 	/**
-	 * Is the point inside the vector
+	 * Indicate whereas the point lays on the line.
 	 * 
 	 * @param point
-	 * @return
+	 *            - The point to check
+	 * @return <code>True</code> if the point lays on the line, otherwise return <code>False</code>
 	 */
 	public boolean isInside(Point point)
 	{
@@ -51,30 +52,52 @@ public class Vector
 	}
 
 	/**
-	 * Is the line is vertical
+	 * Indicate whereas the line is vertical. <br>
+	 * For example, line like x=1 is vertical, in other words parallel to axis Y. <br>
+	 * In this case the A is (+/-)infinite.
 	 * 
-	 * @return
+	 * @return <code>True</code> if the line is vertical, otherwise return <code>False</code>
 	 */
 	public boolean isVertical()
 	{
 		return _vertical;
 	}
 
+	/**
+	 * y = <b>A</b>x + B
+	 * 
+	 * @return The <b>A</b>
+	 */
 	public float getA()
 	{
 		return _a;
 	}
 
+	/**
+	 * y = Ax + <b>B</b>
+	 * 
+	 * @return The <b>B</b>
+	 */
 	public float getB()
 	{
 		return _b;
 	}
 
+	/**
+	 * Get start point
+	 * 
+	 * @return The start point
+	 */
 	public Point getStart()
 	{
 		return _start;
 	}
 
+	/**
+	 * Get end point
+	 * 
+	 * @return The end point
+	 */
 	public Point getEnd()
 	{
 		return _end;
