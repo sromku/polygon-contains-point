@@ -1,7 +1,7 @@
-package com.romkuapps.test;
+package com.sromku.test;
 
-import com.romkuapps.polygon.Point;
-import com.romkuapps.polygon.Polygon;
+import com.sromku.polygon.Point;
+import com.sromku.polygon.Polygon;
 
 public class Tests
 {

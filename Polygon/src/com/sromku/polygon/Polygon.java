@@ -1,4 +1,4 @@
-package com.romkuapps.polygon;
+package com.sromku.polygon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -286,9 +286,9 @@ public class Polygon
 
 	private static class BoundingBox
 	{
-		public float xMax = -1f;
-		public float xMin = -1f;
-		public float yMax = -1f;
-		public float yMin = -1f;
+		public float xMax = Float.NEGATIVE_INFINITY;
+		public float xMin = Float.NEGATIVE_INFINITY;
+		public float yMax = Float.NEGATIVE_INFINITY;
+		public float yMin = Float.NEGATIVE_INFINITY;
 	}
 }

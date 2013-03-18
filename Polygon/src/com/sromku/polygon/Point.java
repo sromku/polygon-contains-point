@@ -1,4 +1,4 @@
-package com.romkuapps.polygon;
+package com.sromku.polygon;
 
 /**
  * Point on 2D landscape

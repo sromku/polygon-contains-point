@@ -1,4 +1,4 @@
-package com.romkuapps.polygon;
+package com.sromku.polygon;
 
 /**
  * Line is defined by starting point and ending point on 2D dimension.<br>
