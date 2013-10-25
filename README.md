@@ -60,3 +60,5 @@ boolean contains = polygon.contains(point);
 ## Tests
 
 Two main tests are attached (not in junit format). Both tests cover polygons with holes and without.
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sromku/polygon-contains-point/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
