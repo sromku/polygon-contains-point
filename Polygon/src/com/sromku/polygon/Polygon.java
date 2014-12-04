@@ -184,7 +184,7 @@ public class Polygon
 			/*
 			 * If the number of intersections is odd, then the point is inside the polygon
 			 */
-			if (intersection % 2 == 1)
+			if (intersection % 2 != 0)
 			{
 				return true;
 			}
