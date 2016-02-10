@@ -73,6 +73,21 @@ public class Polygon
 
 			return this;
 		}
+		
+		 /**
+         * Add vertices of the polygon as a list
+         * The list must contain vertices in correct order
+         * @param vertices the list of vertices
+         * @return The Builder
+         */
+        public Builder addVerticesAsList(List<Point> vertices)
+        {
+            for(Point point : vertices)
+            {
+                addVertex(point);
+            }
+            return this;
+        }
 
 		/**
 		 * Close the polygon shape. This will create a new side (edge) from the <b>last</b> vertex point to the <b>first</b> vertex point.
