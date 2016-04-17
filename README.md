@@ -8,7 +8,7 @@ Wiki reference: [Point in polygon](http://en.wikipedia.org/wiki/Point_in_polygon
 ## Algorithm
 The number of intersections for a ray passing from the exterior of the polygon to any point; if odd, it shows that the point lies inside the polygon. If it is even, the point lies outside the polygon.
 
-![Screenshot](http://romkuapps.com/Apps/Refs/simple_polygon.png)
+<img src="/assets/simple_polygon.png"/>
 
 ## Usage
 
@@ -48,7 +48,7 @@ Polygon polygon = Polygon.Builder()
         .build();
 ```
 
-![Screenshot](http://romkuapps.com/Apps/Refs/polygon_with_holes.png)
+<img src="/assets/polygon_with_holes.png"/>
 
 ### Check if the point inside
 
