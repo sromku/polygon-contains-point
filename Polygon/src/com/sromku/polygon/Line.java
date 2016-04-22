@@ -39,19 +39,19 @@ public class Line
 	 */
 	public boolean isInside(Point point)
 	{
-        if (_end.x == _start.x) {
-            	if (point.y == _end.y) return false;
-            	float ty = (point.y - _start.y) / (_end.y - _start.y);
-            	return (ty >= 0) && (ty <= 1);
-        }
-        if (_end.y == _start.y) {
-            	if (point.x == _end.x) return false;
-            	float tx = (point.x - _start.x) / (_end.x - _start.x);
-            	return (tx >= 0) && (tx <= 1);
-        }
-        float tx = (point.x - _start.x) / (_end.x - _start.x);
-        float ty = (point.y - _start.y) / (_end.y - _start.y);
-        return (tx == ty) && (tx >= 0) && (tx <= 1);
+        	if (_end.x == _start.x) {
+            		if (point.y == _end.y) return false;
+            		float ty = (point.y - _start.y) / (_end.y - _start.y);
+            		return (ty >= 0) && (ty <= 1);
+        	}
+		if (_end.y == _start.y) {
+        	 	if (point.x == _end.x) return false;
+        	   	float tx = (point.x - _start.x) / (_end.x - _start.x);
+        	   	return (tx >= 0) && (tx <= 1);
+        	}
+        	float tx = (point.x - _start.x) / (_end.x - _start.x);
+        	float ty = (point.y - _start.y) / (_end.y - _start.y);
+        	return (tx == ty) && (tx >= 0) && (tx <= 1);
 	}
 
 	/**
