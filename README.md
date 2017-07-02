@@ -1,11 +1,16 @@
 polygon-contains-point
 ======================
 
-
 The point-in-polygon (PIP) problem asks whether a given point in the plane lies inside, outside, or on the boundary of a polygon.
 Wiki reference: [Point in polygon](http://en.wikipedia.org/wiki/Point_in_polygon)
 
-## Algorithm
+## Latest Release
+
+:inbox_tray: Download - [polygon-1.0.2.jar](https://github.com/sromku/polygon-contains-point/releases/download/1.0.2/polygon-1.0.2.jar)
+
+:bookmark_tabs: Changelog - https://github.com/sromku/polygon-contains-point/releases/latest
+
+## Algorith
 The number of intersections for a ray passing from the exterior of the polygon to any point; if odd, it shows that the point lies inside the polygon. If it is even, the point lies outside the polygon.
 
 <img src="/assets/simple_polygon.png"/>
@@ -63,18 +68,9 @@ Two main tests are attached (not in junit format). Both tests cover polygons wit
 
 ## License
 
-    Copyright 2013-present Roman Kushnarenko
+Apache 2.0. See [LICENSE](LICENSE)
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+## Follow us
 
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sromku/polygon-contains-point/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=https://github.com/snatik/polygon-contains-point)
+[![Twitter Follow](https://img.shields.io/twitter/follow/snatikteam.svg?style=social)](https://twitter.com/snatikteam)
