@@ -157,4 +157,34 @@ public class Tests {
         assertEquals(true, polygon.contains(new Point(3, 3.9)));
 
     }
+
+    @Test
+    public void testBorders() {
+
+        /*
+         * Unfortunately, this method won't work if the point is on the edge of the polygon.
+         * https://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm
+         */
+
+        Polygon polygon = Polygon.Builder()
+                .addVertex(new Point(-1, -1))
+                .addVertex(new Point(-1, 1))
+                .addVertex(new Point(1, 1))
+                .addVertex(new Point(1, -1))
+                .build();
+
+        // it's false !
+        assertEquals(false, polygon.contains(new Point(0, 1)));
+
+        polygon = Polygon.Builder()
+                .addVertex(new Point(-1, -1))
+                .addVertex(new Point(-1, 1))
+                .addVertex(new Point(1, 1))
+                .addVertex(new Point(1, -1))
+                .build();
+
+        // it's true !
+        assertEquals(true, polygon.contains(new Point(-1, 0)));
+
+    }
 }
