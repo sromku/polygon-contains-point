@@ -10,7 +10,7 @@ Wiki reference: [Point in polygon](http://en.wikipedia.org/wiki/Point_in_polygon
 
 :bookmark_tabs: Changelog - https://github.com/sromku/polygon-contains-point/releases/latest
 
-## Algorith
+## Algorithm
 The number of intersections for a ray passing from the exterior of the polygon to any point; if odd, it shows that the point lies inside the polygon. If it is even, the point lies outside the polygon.
 
 <img src="/assets/simple_polygon.png"/>
